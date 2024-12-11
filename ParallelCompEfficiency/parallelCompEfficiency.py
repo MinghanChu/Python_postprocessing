@@ -1,25 +1,25 @@
 import matplotlib.pyplot as plt
 
 # Enable LaTeX rendering for text （uncomment for English labels/captions）
-#plt.rcParams.update({
-#    "text.usetex": True,
-#    "font.family": "serif",
-#    "font.serif": ["Computer Modern"],  # Use LaTeX's default font
-#})
-
-# Configure the font and enable Chinese character support
 plt.rcParams.update({
-    "font.family": "sans-serif",
-    "font.sans-serif": ["PingFang HK"],  # SimHei is a common Chinese font; adjust as needed
-    "axes.unicode_minus": False  # Ensure minus signs are rendered correctly
+    "text.usetex": True,
+    "font.family": "serif",
+    "font.serif": ["Computer Modern"],  # Use LaTeX's default font
 })
 
-# Enable LaTeX rendering for text for English
+# Configure the font and enable Chinese character support
 #plt.rcParams.update({
-#    "text.usetex": True,
-#    "font.family": "serif",
-#    "font.serif": ["Computer Modern"],  # Use LaTeX's default font
+#    "font.family": "sans-serif",
+#    "font.sans-serif": ["PingFang HK"],  # SimHei is a common Chinese font; adjust as needed
+#    "axes.unicode_minus": False  # Ensure minus signs are rendered correctly
 #})
+
+# Enable LaTeX rendering for text for English
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    "font.serif": ["Computer Modern"],  # Use LaTeX's default font
+})
 
 # Data: Replace with your simulation results
 processors = [1, 300, 600, 900, 1200]  # Number of CPUs
@@ -32,7 +32,7 @@ efficiency = [s / p for s, p in zip(speedup, processors)]  # Efficiency calculat
 # Create a figure with two subplots arranged vertically
 fig, axs = plt.subplots(2, 1, figsize=(8, 10))  # 2 rows, 1 column
 
-# Subplot 1: Speedup vs. CPUs
+"""# Subplot 1: Speedup vs. CPUs
 axs[0].plot(processors, speedup, marker='o', label='加速比（SpeedUp）')
 axs[0].plot(processors, processors, '--', label='理想加速比 (S=n)')
 axs[0].set_xlabel('CPU数量 （n）')
@@ -49,8 +49,9 @@ axs[1].set_ylabel('并行效率 (%)')
 axs[1].set_title('并行效率 vs. CPU 数量')
 axs[1].legend()
 axs[1].grid()
+"""
 
-"""English version
+#English version
 # Subplot 1: Speedup vs. CPUs
 axs[0].plot(processors, speedup, marker='o', label='Measured Speedup')
 axs[0].plot(processors, processors, '--', label='Ideal Speedup (S=n)')
@@ -68,7 +69,7 @@ axs[1].set_ylabel('Efficiency (%)')
 axs[1].set_title('Parallel Efficiency vs. Number of CPUs')
 axs[1].legend()
 axs[1].grid()
-"""
+
 
 
 # Adjust layout for better spacing
