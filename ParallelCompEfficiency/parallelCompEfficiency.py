@@ -28,9 +28,9 @@ speedup = [execution_time[0] / t for t in execution_time]  # Speedup calculation
 efficiency = [s / p for s, p in zip(speedup, processors)]  # Efficiency calculation
 
 # Create a figure with two subplots
-#fig, axs = plt.subplots(1, 2, figsize=(15, 5))  # 1 row, 2 columns
+fig, axs = plt.subplots(1, 2, figsize=(15, 5))  # 1 row, 2 columns
 # Create a figure with two subplots arranged vertically
-fig, axs = plt.subplots(2, 1, figsize=(8, 10))  # 2 rows, 1 column
+#fig, axs = plt.subplots(2, 1, figsize=(8, 10))  # 2 rows, 1 column
 
 """# Subplot 1: Speedup vs. CPUs
 axs[0].plot(processors, speedup, marker='o', label='加速比（SpeedUp）')
@@ -63,9 +63,9 @@ axs[0].grid()
 
 # Subplot 2: Efficiency vs. CPUs
 axs[1].plot(processors, efficiency, marker='o', label='Parallel Efficiency')
-axs[1].axhline(1.0, color='r', linestyle='--', label='100% Efficiency')
+axs[1].axhline(1.0, color='r', linestyle='--', label='$100\%$ Efficiency')
 axs[1].set_xlabel('Number of CPUs')
-axs[1].set_ylabel('Efficiency (%)')
+axs[1].set_ylabel('Efficiency ($\%$)')
 axs[1].set_title('Parallel Efficiency vs. Number of CPUs')
 axs[1].legend()
 axs[1].grid()
