@@ -38,13 +38,12 @@ grid = True
 manual_overrides = {
     "": {"style": "-", "color": "red", "alpha": 0.1},
     "omega404_CFL400": {"style": "-", "color": "green", "alpha": 1},
-    "comega304": {"style": "-", "color": "green", "alpha": 1},
     "omega404_continue": {"style": "-", "color": "red", "alpha": 0.1},
     "coefficient": {"style": "-", "color": "red", "alpha": 1},
 }
 
 # Specify filenames to skip (base filenames without paths)
-skip_files = {"omega15_gust_time(0.15)", "omega2_gust_time(0.3)_CFL400", "omega15", "omega100", "omega50"}
+skip_files = {"omega404", "omega304", "coefficient","coefficient_0.14","omega15","omega50","Solver_v1", "omega100"}
 conflicting_files = set(manual_overrides.keys()).intersection(skip_files)
 if conflicting_files:
     logging.warning(
