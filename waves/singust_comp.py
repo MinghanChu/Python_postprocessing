@@ -155,7 +155,8 @@ for i, data in enumerate(data_list_u):
         markerfacecolor="none",        # Open marker
         markeredgewidth=1.5,           # Thickness of marker edge
         #color=custom_colors[i % len(custom_colors)],           # Line color
-        markeredgecolor=custom_colors[i % len(custom_colors)]  # Marker edge color
+        markeredgecolor=custom_colors[i % len(custom_colors)],  # Marker edge color
+        alpha = 0.2 # adjust the transparency of marker edge color
     )
 
 

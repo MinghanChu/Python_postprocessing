@@ -11,7 +11,10 @@ def plot_coefficients_comparison(
     line_styles,
     line_colors,
     line_alphas,
-    grid
+    grid,
+    exp_marker=None,  # New parameter to accept marker settings for experimental data
+    plot_lines=True,  # Flag to control line plotting
+    plot_markers=True  # Flag to control marker plotting
 ):
     """
     Plot a comparison of coefficients (Cl or Cd) from multiple datasets with customizable line styles, colors, and transparency.
@@ -28,13 +31,14 @@ def plot_coefficients_comparison(
         line_colors (list): List of line colors for each dataset (e.g., ['blue', 'green', 'red']).
         line_alphas (list): List of transparency values (0.0 to 1.0) for each dataset.
         grid (bool): Whether to show the grid.
+        exp_marker (dict, optional): Dictionary with marker customization for experimental data.
+        plot_lines (bool): Whether to plot lines for experimental data (default True).
+        plot_markers (bool): Whether to plot markers for experimental data (default True).
     """
     # Convert filename to LaTeX format for axis label
-    # A dictionary latex_labels maps "Cl" to $C_l$ and "Cd" to $C_d$
-
     latex_labels = {"Cl": r"$C_l$", "Cd": r"$C_d$"}
     
-    # If filename matches “Cl” or “Cd”, the y-axis label is set in LaTeX format. Otherwise, it defaults to the original filename.
+    # If filename matches "Cl" or "Cd", the y-axis label is set in LaTeX format. Otherwise, it defaults to the original filename.
     y_label = latex_labels.get(filename, filename)  # Default to filename if not Cl or Cd
 
     # Create the plot
@@ -43,15 +47,47 @@ def plot_coefficients_comparison(
 
     # Plot each dataset with specific style, color, and transparency
     for data, label, style, color, alpha in zip(data_list, labels, line_styles, line_colors, line_alphas):
-        plt.plot(
-            data["Time"],
-            data[filename],
-            label=label,
-            linestyle=style,
-            color=color,
-            alpha=alpha,  # Set transparency
-            linewidth=2
-        )
+        if label == "Experimental Data" and exp_marker is not None:
+            # Plot experimental data with customizable markers and lines (if desired)
+            if plot_lines:
+                # Plot line if plot_lines is True
+                plt.plot(
+                    data["Time"],
+                    data[filename],
+                    label=label,
+                    linestyle=style,  # Solid line
+                    color=color,
+                    alpha=alpha,  # Set transparency
+                    linewidth=2
+                )
+            
+            if plot_markers:
+                # Plot markers if plot_markers is True
+                plt.plot(
+                    data["Time"],
+                    data[filename],
+                    label=label,
+                    linestyle="None",  # No line, just markers
+                    color=exp_marker.get("markeredgecolor", color),
+                    alpha=alpha,
+                    marker=exp_marker["marker"],  # Use the specified marker
+                    markerfacecolor=exp_marker["markerfacecolor"],
+                    markeredgecolor=exp_marker["markeredgecolor"],
+                    markeredgewidth=exp_marker["markeredgewidth"],
+                    markersize=exp_marker.get("markersize", 6),  # Default size of marker
+                    linewidth=0,  # No line for experimental data
+                )
+        else:
+            # For other datasets, use the specified line styles and colors
+            plt.plot(
+                data["Time"],
+                data[filename],
+                label=label,
+                linestyle=style,
+                color=color,
+                alpha=alpha,  # Set transparency
+                linewidth=2
+            )
 
     # Set plot limits
     if xrange:
@@ -70,7 +106,6 @@ def plot_coefficients_comparison(
     # Add legend
     plt.legend(loc="best", fontsize=12)
 
-    
     # Save the plot with the provided filename
     plt.savefig(f"./results/{filename}.pdf", bbox_inches='tight', format='pdf')
 
