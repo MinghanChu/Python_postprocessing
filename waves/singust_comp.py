@@ -177,9 +177,16 @@ for i, data in enumerate(data_list_csv):
     )
 
 # Plot generated sine wave
+"""
+	•	rf"" is a raw f-string, which allows LaTeX-style math formatting with r"$...$" while also substituting variables.
+	•	{phase_shift:.6f} formats the phase shift with six decimal places.
+	•	{offset:+.6f} ensures that the sign is always displayed (e.g., -0.25 instead of just 0.25).
+"""
+label_str = rf"Reconstructed (${amplitude:.6f}\sin(\omega t {phase_shift:+.6f}) {offset:+.6f}$)"
+
 plt.plot(
     t_norm, sin_wave,
-    label="Reconstructed ($A\sin(\omega t + 0.128559) -0.25$)",
+    label=label_str,
     linestyle="-", 
     linewidth=2,
     color="red",
@@ -189,12 +196,14 @@ plt.plot(
 # Plot generated sine wave
 plt.plot(
     t_norm, original_sin_wave,
-    label="$A\sin(\omega t)$",
+    label=rf"${amplitude}\sin(\omega t)$",
     linestyle="-", 
     linewidth=2,
     color="k",
     alpha=0.5
 )
+
+print(f"amplitude: {amplitude}, offset: {offset}, phase shift: {phase_shift}")
 
 # Fill area between specific CSV datasets
 if sinwave_exp_2_5c and sinwave_exp_0_5c:
@@ -217,8 +226,8 @@ if sinwave_exp_2_5c and sinwave_exp_0_5c:
     )
 
 # Add horizontal lines for positive and negative peaks
-plt.axhline(positive_peak, color="grey", linestyle="--", label="Positive Peak")
-plt.axhline(negative_peak, color="grey", linestyle="-.", label="Negative Peak")
+plt.axhline(positive_peak, color="grey", linestyle="--", label=rf"Negative peak ({positive_peak:.3f})")
+plt.axhline(negative_peak, color="grey", linestyle="-.", label=rf"Positive peak (${negative_peak:.3f}$)")
 
 # Customizing the legend
 legend = plt.legend(
